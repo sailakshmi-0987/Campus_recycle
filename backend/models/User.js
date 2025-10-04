@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        unique: true,
+        unique: true, // 👈 this alone is enough, no need for extra index
         lowercase: true,
         trim: true,
         validate: {
@@ -103,8 +103,7 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Indexes
-userSchema.index({ email: 1 });
+// Keep only **necessary** indexes
 userSchema.index({ university: 1 });
 userSchema.index({ accountStatus: 1 });
 
@@ -119,12 +118,12 @@ userSchema.pre('save', async function(next) {
     next();
 });
 
-// Compare password method
+// Compare password
 userSchema.methods.comparePassword = async function(candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 };
 
-// Generate JWT token
+// Generate JWT
 userSchema.methods.getSignedJwtToken = function() {
     return jwt.sign(
         { id: this._id, email: this.email },
@@ -143,7 +142,7 @@ userSchema.methods.getEmailVerificationToken = function() {
     return verificationToken;
 };
 
-// Get public profile
+// Public JSON
 userSchema.methods.toPublicJSON = function() {
     return {
         id: this._id,
