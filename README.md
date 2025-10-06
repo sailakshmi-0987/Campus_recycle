@@ -27,4 +27,4 @@
 3.Eco-Friendly → Builds a circular economy right on campus.
 4.Simple & Intuitive → Minimal clicks, maximum value.
 
-**Why throws it away,when someone text door needs it?**
+**Why throw it away,when someone text door needs it?**
